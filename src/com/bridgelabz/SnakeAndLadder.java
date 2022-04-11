@@ -35,17 +35,21 @@ public class SnakeAndLadder {
 	// Method to Check for Option
 	private void optionPlay(int dieNo) {
 
-		int optionNo = randomNo.nextInt(3) + 1;
+		int optionNo = randomNo.nextInt(2) + 1;
 		System.out.println("Option No : " + optionNo);
 
 		switch (optionNo) {
 		case IS_NO_PLAY:
 			System.out.println("Player got NO PLAY");
-			newPosition = 0;
 			break;
 		case IS_LADDER:
 			System.out.println("Yahoo!!! Player got LADDER");
 			playerPosition += dieNo;
+			// If Player Position greater than 100 then skip the Play
+			if (playerPosition > 100) {
+				System.out.println("Sorry The Position is Out of Board.");
+				playerPosition -= dieNo;
+			}
 			break;
 		case IS_SNAKE:
 			System.out.println("OOPS!!! Player got SNAKE");
@@ -67,12 +71,15 @@ public class SnakeAndLadder {
 		// Showing Player Position
 		player1.showPosition();
 
-		// Show Die Rolling No
-		int dieNo = player1.rollDie();
-		System.out.println("Die Number for Player : " + dieNo);
+		// Iterating upto Player got Position 100
+		while (player1.playerPosition != 100) {
+			// Show Die Rolling No
+			int dieNo = player1.rollDie();
+			System.out.println("Die Number for Player : " + dieNo);
 
-		// Player going for Options
-		player1.optionPlay(dieNo);
-		player1.showPosition();
+			// Player going for Options
+			player1.optionPlay(dieNo);
+			player1.showPosition();
+		}
 	}
 }
