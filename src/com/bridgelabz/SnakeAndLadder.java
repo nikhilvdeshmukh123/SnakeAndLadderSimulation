@@ -1,36 +1,78 @@
 package com.bridgelabz;
+
 /*
  * @author : Nikhil
  * Snake And Ladder Simulation
  */
+import java.util.Random;
+
 public class SnakeAndLadder {
 
-    //Declaring Variables for Players Position
-    int playerPosition = 0;
+	// Constants
+	private static final int IS_NO_PLAY = 0;
+	private static final int IS_LADDER = 1;
+	private static final int IS_SNAKE = 2;
 
-    //Method to Show Player Current Position
-    private void showPosition() {
-        //Displaying Player Position
-        System.out.println("Player Starting Position : "+ playerPosition);
-    }
+	// Declaring Variables for Players Position
+	int playerPosition = 0;
+	int newPosition = 0;
 
-    //Method to Roll the Die and Get No between 1 to 6
-    private int rollDie() {
-        int dieNo = (int) Math.floor(Math.random() * 10)%6+1;
-        return dieNo;
-    }
+	// Random Class Object for Generating Random Numbers
+	Random randomNo = new Random();
 
-    public static void main(String[] args) {
-        //Displaying Welcome Message
-        System.out.println("Welcome to Snake and Ladder Simulator");
+	// Method to Show Player Current Position
+	private void showPosition() {
+		// Displaying Player Position
+		System.out.println("Player Starting Position : " + playerPosition);
+	}
 
-        //Creating Object for Player
-        SnakeAndLadder player1 = new SnakeAndLadder();
+	// Method to Roll the Die and Get No between 1 to 6
+	private int rollDie() {
+		int dieNo = randomNo.nextInt(6) + 1;
+		return dieNo;
+	}
 
-        //Showing Player Position
-        player1.showPosition();
+	// Method to Check for Option
+	private void optionPlay(int dieNo) {
 
-        //Show Die Rolling No
-        System.out.println("Die Number for Player : "+ player1.rollDie());
-    }
+		int optionNo = randomNo.nextInt(3) + 1;
+		System.out.println("Option No : " + optionNo);
+
+		switch (optionNo) {
+		case IS_NO_PLAY:
+			System.out.println("Player got NO PLAY");
+			newPosition = 0;
+			break;
+		case IS_LADDER:
+			System.out.println("Yahoo!!! Player got LADDER");
+			playerPosition += dieNo;
+			break;
+		case IS_SNAKE:
+			System.out.println("OOPS!!! Player got SNAKE");
+			playerPosition -= dieNo;
+			if (playerPosition < 0) {
+				playerPosition = 0;
+			}
+			break;
+		}
+	}
+
+	public static void main(String[] args) {
+		// Displaying Welcome Message
+		System.out.println("Welcome to Snake and Ladder Simulator");
+
+		// Creating Object for Player
+		SnakeAndLadder player1 = new SnakeAndLadder();
+
+		// Showing Player Position
+		player1.showPosition();
+
+		// Show Die Rolling No
+		int dieNo = player1.rollDie();
+		System.out.println("Die Number for Player : " + dieNo);
+
+		// Player going for Options
+		player1.optionPlay(dieNo);
+		player1.showPosition();
+	}
 }
